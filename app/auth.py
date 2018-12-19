@@ -2,6 +2,7 @@ from flask import (
     Blueprint, flash, redirect, render_template, request, session, url_for
 )
 from werkzeug.security import check_password_hash, generate_password_hash
+
 from app.db import get_db
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
@@ -20,7 +21,7 @@ def register():
         elif not password:
             error = 'Password is required.'
         elif db.execute(
-            'SELECT id FROM customer WHERE email = ?', (username,)
+                'SELECT id FROM customer WHERE email = ?', (username,)
         ).fetchone() is not None:
             error = 'User {} is already registered.'.format(username)
 
@@ -55,7 +56,8 @@ def login():
         if user is None:
             error = 'Incorrect username.'
         elif not check_password_hash(generate_password_hash(user['PASSWORD']), generate_password_hash(password)):
-            print('password: ', user['PASSWORD'], password, check_password_hash(user['PASSWORD'], password), type(user['PASSWORD']), type(password), len(user['PASSWORD']), len(password))
+            print('password: ', user['PASSWORD'], password, check_password_hash(user['PASSWORD'], password),
+                  type(user['PASSWORD']), type(password), len(user['PASSWORD']), len(password))
             print(generate_password_hash(user['PASSWORD']), generate_password_hash(password))
             error = 'Incorrect password.'
 

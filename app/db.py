@@ -1,5 +1,5 @@
-from flaskext.mysql import MySQL
 from flask import Flask
+from flaskext.mysql import MySQL
 from pymysql.cursors import DictCursor
 
 app = Flask(__name__)
