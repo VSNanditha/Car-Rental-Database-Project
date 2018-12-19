@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container">
+    <h3>Car List</h3>
+    <table>
+        <tr>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Price/day</th>
+            <th></th>
+        </tr>
+        {% for item in car_list %}
+        <tr>
+            <td>{{ item['MAKE'] }}</td>
+            <td>{{ item['MODEL'] }}</td>
+            <td>$ {{ item['PRICE'] }}</td>
+            <td><a href="{{ url_for('homepage.book', make=item['MAKE'], model=item['MODEL'], price=item['PRICE']) }}">Book</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+<br><br>
+{% endblock %}

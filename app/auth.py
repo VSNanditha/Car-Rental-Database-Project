@@ -1,77 +1,76 @@
 from flask import (
     Blueprint, flash, redirect, render_template, request, session, url_for
 )
-from werkzeug.security import check_password_hash, generate_password_hash
 
 from app.db import get_db
 
+# from werkzeug.security import check_password_hash, generate_password_hash
+
 bp = Blueprint('auth', __name__, url_prefix='/auth')
+db, conn = get_db()
 
 
-@bp.route('/register', methods=('GET', 'POST'))
-def register():
+@bp.route('/signup', methods=('GET', 'POST'))
+def signup():
     if request.method == 'POST':
-        username = request.form['username']
+        username = request.form['email']
         password = request.form['password']
-        db = get_db()
-        error = None
+        firstname = request.form['firstname']
+        lastname = request.form['lastname']
+        license = request.form['license']
+        address = request.form['address']
+        phone = request.form['phone']
+        zip = request.form['zip']
 
-        if not username:
-            error = 'Username is required.'
-        elif not password:
-            error = 'Password is required.'
-        elif db.execute(
-                'SELECT id FROM customer WHERE email = ?', (username,)
-        ).fetchone() is not None:
-            error = 'User {} is already registered.'.format(username)
+        try:
+            db.callproc('signup', (username, license, firstname, lastname, address, zip, phone,
+                                   username, password))
+            data = db.fetchall()
+            if len(data) is 0:
+                conn.commit()
+                return redirect(url_for('auth.login'))
+            else:
+                print('data: ', data, firstname, lastname, license, address, zip, phone, username, password)
+                flash('User Already Exists!!')
+        except:
+            flash('User Already Exists!!')
 
-        if error is None:
-            db.execute(
-                'INSERT INTO customer (email, password) VALUES (?, ?)',
-                (username, generate_password_hash(password))
-            )
-            db.commit()
-            return redirect(url_for('auth.login'))
-
-        flash(error)
-
-    return render_template('auth/register.html', template_folder='templates')
+    return render_template('auth/signup.html', template_folder='templates')
 
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
+    session.clear()
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        print(username, password)
-        db = get_db()
+        # print(username, password)
         error = None
         db.execute(
             'SELECT * FROM customer WHERE email = (%s)', (username,)
         )
         user = db.fetchone()
 
-        print(user)
-
         if user is None:
             error = 'Incorrect username.'
-        elif not check_password_hash(generate_password_hash(user['PASSWORD']), generate_password_hash(password)):
-            print('password: ', user['PASSWORD'], password, check_password_hash(user['PASSWORD'], password),
-                  type(user['PASSWORD']), type(password), len(user['PASSWORD']), len(password))
-            print(generate_password_hash(user['PASSWORD']), generate_password_hash(password))
+        elif not (user['PASSWORD'] == password):
             error = 'Incorrect password.'
 
         if error is None:
-            session.clear()
-            session['user_id'] = user['id']
-            return redirect(url_for('index'))
+            session['user_id'] = user['EMAIL']
+            session['name'] = user['FIRST_NAME'] + ' ' + user['LAST_NAME']
+            session['id'] = user['CUSTOMER_ID']
+            session['address'] = user['ADDRESS'] + ', ' + str(user['ZIP_CODE'])
+            session['phone'] = user['PHONE_NUMBER']
+            # print('session data: ', session, session['user_id'])
+            return redirect(url_for('site.home'))
 
         flash(error)
 
-    return render_template('auth/login.html', template_folder='templates')
+    return render_template('auth/login.html', active='login', template_folder='templates')
 
 
 @bp.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('index'))
+    return redirect(url_for('auth.login'))

@@ -1,8 +1,30 @@
 body {
-    font: 15px/1.5 Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: medium;
     padding: 0;
     margin: 0;
     background-color: #f4f4f4;
+}
+
+label {
+    font-weight: bold;
+    padding-right: 10px;
+}
+
+.grid {
+    display: grid;
+    grid-column-gap: 50px;
+    grid-template-columns: auto auto auto;
+}
+
+.grid-2 {
+    display: grid;
+    grid-column-gap: 50px;
+    grid-template-columns: auto auto;
+}
+
+.grid-item {
+    padding: 10px 20px 10px 20px;
 }
 
 /* Global */
@@ -17,13 +39,23 @@ ul {
     padding: 0;
 }
 
-.button_1 {
-    height: 38px;
+a {
+    text-decoration: none;
+}
+
+button, input[type=submit], td a, .signup {
+    width: 80%;
+    border-radius: 5px;
+    text-align: center;
+    margin: auto;
+    display: block;
+    padding: 10px 20px 10px 20px;
     background: #e8491d;
     border: 0;
-    padding-left: 20px;
-    padding-right: 20px;
     color: #ffffff;
+    font-weight: bold;
+    font-size: medium;
+    cursor: pointer;
 }
 
 .dark {
@@ -81,7 +113,7 @@ header a:hover {
 
 /* Showcase */
 #showcase {
-    min-height: 400px;
+    min-height: 250px;
     background: url('../img/showcase.jpg') no-repeat 0 -400px;
     text-align: center;
     color: #ffffff;
@@ -142,7 +174,7 @@ aside#sidebar {
     margin-top: 10px;
 }
 
-aside#sidebar .quote input, aside#sidebar .quote textarea {
+aside#sidebar .quote, aside#sidebar .quote textarea {
     width: 90%;
     padding: 5px;
 }
@@ -154,6 +186,14 @@ article#main-col {
 }
 
 /* Services */
+ul#services li {
+    list-style: none;
+    padding: 20px;
+    border: #cccccc solid 1px;
+    margin-bottom: 5px;
+    background: #e6e6e6;
+}
+
 ul#services li {
     list-style: none;
     padding: 20px;
@@ -198,8 +238,59 @@ footer {
         width: 100%;
     }
 
-    #newsletter form input[type="email"], .quote input, .quote textarea {
+    #newsletter form input[type="email"], .quote textarea {
         width: 100%;
         margin-bottom: 5px;
     }
+}
+
+input, select {
+    width: 300px;
+    text-overflow: ellipsis;
+    border-radius: 5px;
+    padding-left: 5px;
+    padding-left: 5px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: medium;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border-bottom: 1px solid #ddd;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #e8491d;
+    color: white;
+}
+
+.flash {
+    color: #D8000C;
+    background-color: #FFD2D2;
+    text-align: center;
+    margin: auto;
+    padding: 10px 20px 10px 20px;
+}
+
+h3 {
+    padding: 5px 20px 5px 20px;
 }

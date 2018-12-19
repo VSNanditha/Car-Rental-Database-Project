@@ -1,0 +1,70 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="car rentals">
+    <meta name="keywords" content="car rentals">
+    <title>Hattiesburg Car Rental | Welcome {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+
+<section class="content">
+    <header>
+        {% block header %}
+        <div class="container">
+            <div id="branding">
+                <h1><span class="highlight">Hattiesburg</span> Car Rentals</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li class="{% if active=='home' %}current{%endif %}"><a href="{{ url_for('site.home') }}">Home</a>
+                    </li>
+                    <li class="{% if active=='about' %}current{%endif %}"><a
+                            href="{{ url_for('site.about') }}">About</a></li>
+                    {% if 'user_id' in session.keys() %}
+                    <li class="{% if active=='inventory' %}current{%endif %}"><a
+                            href="{{ url_for('site.booking_history') }}">Booking History</a></li>
+                    {% endif %}
+                    {% if 'user_id' not in session.keys() %}
+                    <li class="{% if active=='login' %}current{%endif %}"><a href="{{ url_for('auth.login')    }}">Login/Sign
+                        up</a></li>
+                    {% else %}
+                    <li class="{% if active=='logout' %}current{%endif %}"><a href="{{ url_for('auth.logout')    }}">Logout</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+
+        <section id="showcase">
+            <div class="container">
+                <h1>Affordable Cars for Rent in Hattiesburg</h1>
+                <p>Looking for a Car to rent? You have come to the right place! Great Cars at Great Prices</p>
+            </div>
+        </section>
+        {% endblock %}
+    </header>
+
+    {% for message in get_flashed_messages() %}
+    <br>
+    <div class="flash">{{ message }}</div>
+    {% endfor %}
+
+    {% block content %}
+    {% endblock %}
+
+    {% block footer %}
+    <section id="newsletter">
+        <div class="container grid">
+            <label class="grid-item" style="font-weight: bold">Sign up for our newsletter!!</label>
+            <input id="subscribe_email" class="grid-item" type="email" placeholder="Enter your email...">
+            <button id="subscribe" class="grid-item" type="submit">Subscribe</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>Hattiesburg Car Rentals, All Rights Reserved &copy; 2018</p>
+    </footer>
+    {% endblock %}
+
+</section>

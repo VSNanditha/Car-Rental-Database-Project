@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="post">
+    <h3>User Details</h3>
+    <div class="container grid">
+        <div class="grid-item">
+            <label for="name">Name: </label>
+            <input name="name" id="name" value="{{ session['name'] }}" readonly>
+        </div>
+        <div class="grid-item">
+            <label for="id">Customer ID: </label>
+            <input name="id" id="id" value="{{ session['id'] }}" readonly>
+        </div>
+        <div class="grid-item">
+            <label for="address">Address: </label>
+            <input name="address" id="address" value="{{ session['address'] }}" readonly>
+        </div>
+        <div class="grid-item">
+            <label for="phone">Phone Number: </label>
+            <input name="phone" id="phone" value="{{ session['phone'] }}" readonly>
+        </div>
+        <div class="grid-item">
+            <label for="email">Phone Number: </label>
+            <input name="email" id="email" value="{{ session['user_id'] }}" readonly>
+        </div>
+    </div>
+    <h3>Car Details</h3>
+    <div class="container grid">
+        <div class="grid-item">
+            <label for="car_type">Car Type: </label>
+            <input name="car_type" id="car_type" value="{{ session['car_type'] }}" readonly>
+        </div>
+        <div class="grid-item">
+            <label for="make">Car Brand: </label>
+            <input name="make" id="make" value="{{ session['make'] }}" readonly>
+        </div>
+        <div class="grid-item">
+            <label for="model">Car Model: </label>
+            <input name="model" id="model" value="{{ session['model'] }}" readonly>
+        </div>
+    </div>
+    <h3>Order Details</h3>
+    <div class="container grid">
+        <div class="grid-item">
+            <label for="pickup_date">Pick-Up Date: </label>
+            <input name="pickup_date" id="pickup_date" value="{{ session['pickup_date'].date() }}" readonly>
+        </div>
+        <div class="grid-item">
+            <label for="drop_date">Drop Date: </label>
+            <input name="drop_date" id="drop_date" value="{{ session['drop_date'].date() }}" readonly>
+        </div>
+        <div class="grid-item">
+            <label for="days">Number of Days: </label>
+            <input name="days" id="days" value="{{ (session['drop_date'] - session['pickup_date']).days }}" readonly>
+        </div>
+        <div class="grid-item">
+            <label for="price">Price/day: </label>
+            <input name="price" id="price" value="{{ session['price'] }}" readonly>
+        </div>
+        <div class="grid-item">
+            <label for="total_price">Total Price: </label>
+            <input name="total_price" id="total_price" value="{{ total_price }}" readonly>
+        </div>
+    </div>
+    <br>
+    <input type="submit" name="Confirm" id="Confirm" value="Confirm Booking">
+    <br>
+</form>
+{% endblock %}

@@ -14,8 +14,4 @@ def get_db():
     mysql.init_app(app)
     conn = mysql.connect()
     cursor = conn.cursor()
-    # query = "select * from RENTAL_RATES"
-    # cursor.execute(query)
-    # data = cursor.fetchall()
-    # print('data: ', data, cursor)
-    return cursor
+    return cursor, conn

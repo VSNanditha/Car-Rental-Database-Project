@@ -1,8 +1,8 @@
 import os
 
-from flask import Flask, render_template
+from flask import Flask, redirect, url_for
 
-from . import auth
+from . import auth, site, homepage
 
 
 def create_app(test_config=None):
@@ -22,13 +22,15 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # a simple page that says hello
-    @app.route('/')
-    def home():
-        app.secret_key = 'super secret key'
-        app.config['SESSION_TYPE'] = 'filesystem'
-        return render_template('home.html', template_folder='templates')
-
     app.register_blueprint(auth.bp)
+    app.register_blueprint(site.site)
+    app.register_blueprint(homepage.homepage)
+
+    @app.route('/', methods=('GET', 'POST'))
+    def home():
+        app.secret_key = 'car rental'
+        app.config['SESSION_TYPE'] = 'filesystem'
+        app.debug = True
+        return redirect(url_for('site.home'))
 
     return app

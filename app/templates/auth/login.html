@@ -1,15 +1,28 @@
-{% extends 'home.html' %}
-
-{% block header %}
-<h1>{% block title %}Log In{% endblock %}</h1>
-{% endblock %}
+{% extends 'base.html' %}
 
 {% block content %}
 <form method="post">
-    <label for="username">Username</label>
-    <input name="username" id="username" required>
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" required>
-    <input type="submit" value="Log In">
+    <br>
+    <br>
+    <br>
+    <div class="container grid-2">
+        <div class="grid-item">
+            <label for="username" style="padding-left: 60px">Username</label>
+            <input name="username" id="username" required>
+        </div>
+        <div class="grid-item">
+            <label for="password" style="padding-left: 60px">Password</label>
+            <input type="password" name="password" id="password" required>
+        </div>
+        <div class="grid-item">
+            <input type="submit" value="Log In" style="width: 50%">
+        </div>
+        <div class="grid-item">
+            <a class="signup" href="{{ url_for('auth.signup') }}" style="width: 45%">Sign Up</a>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
 </form>
 {% endblock %}
