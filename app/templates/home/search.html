@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<form method="post">
+    <br>
+    <div class="container grid-2">
+        <div class="grid-item">
+            <label for="car_make">Car Brand:</label>
+            <select name="car_make" id="car_make" required>
+                <option selected>Select</option>
+                {% for item in car_make_list %}
+                <option value="{{ item['MAKE'] }}">{{ item['MAKE'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <input type="submit" name="Filter" id="Filter" value="Filter">
+    </div>
+    <br>
+</form>
+
+<div class="container">
+    <h3>Car List</h3>
+    <table>
+        <tr>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Price/day</th>
+            <th></th>
+        </tr>
+        {% for item in car_list %}
+        <tr>
+            <td>{{ item['MAKE'] }}</td>
+            <td>{{ item['MODEL'] }}</td>
+            <td>$ {{ item['PRICE'] }}</td>
+            <td><a href="{{ url_for('homepage.book', make=item['MAKE'], model=item['MODEL'], price=item['PRICE']) }}">Book</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+<br><br>
+
+{% endblock %}

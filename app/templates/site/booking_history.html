@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h3>Current Bookings</h3>
+    {% if not current_order_list %}
+    <p>No Current Bookings!!</p>
+    {% else %}
+    <table>
+        <tr>
+            <th>Car</th>
+            <th>Car Type</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Total Price</th>
+            <th></th>
+        </tr>
+        {% for item in current_order_list %}
+        <tr>
+            <td>{{ item['MAKE'] }} {{ item['MODEL'] }}</td>
+            <td>{{ item['TYPE'] }}</td>
+            <td>{{ item['RENT_START_DATE'] }}</td>
+            <td>{{ item['RENT_END_DATE'] }}</td>
+            <td>$ {{ item['ORDER_TOTAL'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</div>
+<div class="container">
+    <h3>Previous Bookings</h3>
+    {% if not previous_order_list %}
+    <p>No Previous Bookings!!</p>
+    {% else %}
+    <table>
+        <tr>
+            <th>Car</th>
+            <th>Car Type</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Total Price</th>
+            <th></th>
+        </tr>
+        {% for item in previous_order_list %}
+        <tr>
+            <td>{{ item['MAKE'] }} {{ item['MODEL'] }}</td>
+            <td>{{ item['TYPE'] }}</td>
+            <td>{{ item['RENT_START_DATE'] }}</td>
+            <td>{{ item['RENT_END_DATE'] }}</td>
+            <td>$ {{ item['ORDER_TOTAL'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</div>
+<br><br>
+{% endblock %}

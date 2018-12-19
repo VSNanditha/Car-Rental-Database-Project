@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="post">
+    <br>
+    <div class="container grid">
+        <div class="grid-item">
+            <label for="car_type">Car Type:</label>
+            <select name="car_type" id="car_type" required>
+                {% if 'car_type' in session.keys() %}
+                <option selected>{{ session['car_type'] }}</option>
+                {% else %}
+                <option selected>Select</option>
+                {% endif %}
+                {% for item in car_types %}
+                <option value="{{ item['TYPE'] }}">{{ item['TYPE'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="grid-item">
+            <label for="pickup_date">Pick-Up Date:</label>
+            <input type="date" name="pickup_date" id="pickup_date" min="{{today}}"
+                   value="{% if 'pickup_date' in session.keys() %}{{session['pickup_date']}}{% endif %}"
+                   required/>
+        </div>
+        <div class="grid-item">
+            <label for="drop_date">Drop Date:</label>
+            <input type="date" name="drop_date" id="drop_date" min="{{tomorrow}}"
+                   value="{% if 'drop_date' in session.keys() %}{{session['drop_date']}}{% endif %}"
+                   required/>
+        </div>
+        <div class="grid-item">
+            <label for="pickup_time">Pick-Up Time:</label>
+            <input type="time" id="pickup_time" name="pickup_time"
+                   value="{% if 'pickup_time' in session.keys() %}{{session['pickup_time']}}{% endif %}"
+                   min="8:00" max="18:00" step="1800" required>
+        </div>
+    </div>
+    <br>
+    <input type="submit" name="Search" id="Search" value="Search">
+    <br>
+</form>
+
+<section id="boxes">
+    <div class="container">
+        <div class="box">
+            <img src="../static/logo_html.png">
+            <h3>FORD</h3>
+            <p>Looking for something sportsy? We got you!</p>
+        </div>
+        <div class="box">
+            <img src="../static/logo_css.png">
+            <h3>HONDA</h3>
+            <p>Looking for an SUV? We got you!</p>
+        </div>
+        <div class="box">
+            <img src="../static/logo_brush.png">
+            <h3>TOYOTA</h3>
+            <p>Looking for a reliable Sedan? We got you</p>
+        </div>
+    </div>
+</section>
+{% endblock %}
